@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpiceLoom - Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/FrontEnd/css/style.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5 text-center">
+    <h1>Welcome to SpiceLoom</h1>
+    <p class="lead">Your one-stop shop for exotic spices.</p>
+    <a href="/FrontEnd/html/login.html" class="btn btn-primary m-2">Login</a>
+    <a href="/FrontEnd/html/register.html" class="btn btn-secondary m-2">Register</a>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        const token = localStorage.getItem('token');
+        if (token) {
+            $.ajax({
+                url: '/api/auth/me',
+                method: 'GET',
+                headers: { 'Authorization': 'Bearer ' + token },
+                success: function(user) {
+                    if (user.role === 'ADMIN') {
+                        window.location.href = '/FrontEnd/html/admin-dashboard.html';
+                    } else {
+                        window.location.href = '/FrontEnd/html/customer-dashboard.html';
+                    }
+                },
+                error: function() {
+                    localStorage.removeItem('token');
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>
