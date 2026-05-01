@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart - SpiceLoom</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+<body>
+<nav class="navbar navbar-dark bg-success">
+    <div class="container">
+        <span class="navbar-brand">SpiceLoom Cart</span>
+        <div>
+            <a href="customer-dashboard.html" class="btn btn-outline-light btn-sm">Home</a>
+            <a href="customer-catalog.html" class="btn btn-outline-light btn-sm">Shop</a>
+            <a href="customer-orders.html" class="btn btn-outline-light btn-sm">Orders</a>
+            <button id="logoutBtn" class="btn btn-outline-light btn-sm">Logout</button>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <h2>Shopping Cart</h2>
+    <div id="cartContainer">
+        <table class="table table-bordered" id="cartTable">
+            <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <div class="text-end">
+            <h4>Total: Rs. <span id="cartTotal">0.00</span></h4>
+            <button id="checkoutBtn" class="btn btn-success">Checkout</button>
+        </div>
+    </div>
+    <div id="emptyCartMessage" class="text-center mt-5" style="display:none;">
+        <h4>Your cart is empty.</h4>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="../js/customer-cart.js"></script>
+<script>
+    const token = localStorage.getItem('token');
+    if (!token) window.location.href = 'login.html';
+    $('#logoutBtn').click(function() {
+        localStorage.clear();
+        window.location.href = '../index.html';
+    });
+</script>
+</body>
+</html>

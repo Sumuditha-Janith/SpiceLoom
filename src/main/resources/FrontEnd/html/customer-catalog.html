@@ -22,6 +22,9 @@
             top: 10px;
             right: 10px;
         }
+        .star-rating {
+            color: #f0ad4e;
+        }
     </style>
 </head>
 <body>
@@ -30,6 +33,8 @@
         <span class="navbar-brand">SpiceLoom Catalog</span>
         <div>
             <a href="customer-dashboard.html" class="btn btn-outline-light btn-sm">Home</a>
+            <a href="customer-cart.html" class="btn btn-outline-light btn-sm">Cart</a>
+            <a href="customer-orders.html" class="btn btn-outline-light btn-sm">Orders</a>
             <button id="logoutBtn" class="btn btn-outline-light btn-sm">Logout</button>
         </div>
     </div>
@@ -60,7 +65,75 @@
     </div>
 </div>
 
+<!-- Product Detail Modal -->
+<div class="modal fade" id="productDetailModal" tabindex="-1" aria-labelledby="productDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productDetailModalLabel">Product Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <img id="modalImage" src="" alt="Product Image" class="img-fluid rounded">
+                    </div>
+                    <div class="col-md-6">
+                        <h4 id="modalName"></h4>
+                        <p id="modalDescription" class="text-muted"></p>
+                        <p><strong>Category:</strong> <span id="modalCategory"></span></p>
+                        <div id="modalPriceSection">
+                            <span id="modalOriginalPrice" class="original-price me-2"></span>
+                            <span id="modalDiscountedPrice" class="fw-bold text-success"></span>
+                            <span id="modalDiscountBadge" class="badge bg-danger ms-2"></span>
+                        </div>
+                        <p class="mt-2"><strong>Stock:</strong> <span id="modalStock"></span></p>
+                        <div class="mt-3">
+                            <label for="quantityInput" class="form-label">Quantity:</label>
+                            <input type="number" class="form-control" id="quantityInput" value="1" min="1" style="width:100px;">
+                        </div>
+                        <button class="btn btn-success mt-3" id="modalAddToCartBtn" data-id="">Add to Cart</button>
+                    </div>
+                </div>
+                <hr>
+                <h5>Customer Reviews</h5>
+                <div id="reviewsContainer">
+                    <p class="text-muted">Loading reviews...</p>
+                </div>
+                <!-- Add Review Form -->
+                <div class="mt-3">
+                    <h6>Write a Review</h6>
+                    <form id="reviewForm">
+                        <input type="hidden" id="reviewProductId">
+                        <div class="mb-2">
+                            <label class="form-label">Rating (1-5)</label>
+                            <select class="form-select" id="reviewRating" required>
+                                <option value="">Select rating</option>
+                                <option value="5">5 - Excellent</option>
+                                <option value="4">4 - Very Good</option>
+                                <option value="3">3 - Good</option>
+                                <option value="2">2 - Fair</option>
+                                <option value="1">1 - Poor</option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Comment (optional)</label>
+                            <textarea class="form-control" id="reviewComment" rows="2"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm">Submit Review</button>
+                        <div id="reviewMessage" class="mt-2"></div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../js/customer-catalog.js"></script>
 <script>
     const token = localStorage.getItem('token');
