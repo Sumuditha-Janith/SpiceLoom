@@ -1,5 +1,6 @@
 package lk.ijse.gdse71.spiceloom.util;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
@@ -13,8 +14,10 @@ import java.util.Map;
 @Component
 public class ImgbbUtil {
 
+    @Value("${imgbb.api.key}")
+    private String imgbbApiKey;
+
     private static final String IMGBB_API_URL = "https://api.imgbb.com/1/upload";
-    private static final String IMGBB_API_KEY = "10926ba2f831e794905783ddac25f687";
 
     public String uploadImage(MultipartFile file) {
         try {
@@ -27,7 +30,7 @@ public class ImgbbUtil {
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
             MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-            body.add("key", IMGBB_API_KEY);
+            body.add("key", imgbbApiKey);        // now injected from property
             body.add("image", base64);
 
             HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(body, headers);
