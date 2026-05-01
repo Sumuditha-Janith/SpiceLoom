@@ -25,6 +25,9 @@ $(document).ready(function() {
                     </tr>`;
                 });
                 $('#adminOrdersTable tbody').html(rows);
+            },
+            error: function() {
+                alert('Failed to load orders.');
             }
         });
     }
@@ -46,6 +49,33 @@ $(document).ready(function() {
             },
             error: function(xhr) {
                 alert('Error: ' + (xhr.responseJSON?.error || 'Update failed'));
+            }
+        });
+    });
+
+    // Sales report download as blob
+    $(document).on('click', '#downloadReportBtn', function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: '/api/admin/orders/report',
+            method: 'GET',
+            headers: headers,
+            xhrFields: {
+                responseType: 'blob'
+            },
+            success: function(data) {
+                const blob = new Blob([data], { type: 'application/pdf' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'sales_report.pdf';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+            },
+            error: function(xhr) {
+                alert('Error downloading report: ' + (xhr.responseText || 'Access denied'));
             }
         });
     });
